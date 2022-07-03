@@ -1,0 +1,1 @@
+export {default as serializeStyle } from './serialize'
