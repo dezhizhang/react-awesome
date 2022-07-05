@@ -1,0 +1,16 @@
+.list{
+    border: 1px solid gray;
+}
+.odd
+.even{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.odd{
+    background: greenyellow;
+}
+.even{
+    background: fuchsia;
+}
