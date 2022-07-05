@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"webpack",
-    "start":"webpack-dev-server"
+    "build": "webpack",
+    "start": "webpack-dev-server",
+    "lint": "eslint src --ext .tsx",
+    "lint:fix": "eslint src --ext .tsx --fix",
+    "test":"jest"
   },
   "husky": {
     "hooks": {
@@ -17,21 +19,28 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^28.1.4",
     "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.2.2",
     "hoist-non-react-statics": "^3.3.2",
+    "jest": "^28.1.2",
     "source-map-loader": "^4.0.0",
+    "ts-jest": "^28.0.5",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
     "validate-commit-msg": "^2.14.0"
   },
   "dependencies": {
+    "@types/node": "^18.0.1",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "^7.1.24",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "connected-react-router": "^6.9.2",
+    "eslint": "^8.19.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",
     "react": "^18.2.0",
