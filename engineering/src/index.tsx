@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'; 
 
+const root:HTMLElement | null =document.getElementById('root');
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(root!).render(
     <div>hello</div>  
 )
   
