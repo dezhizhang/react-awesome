@@ -29,11 +29,16 @@ class FormStore{
 
 export default function useForm() {
     let formRef = React.useRef();
+    //强行刷新组件
+    let [,forceUpdate] = React.useState({});
     if(!formRef.current) {
-        let formStore = new FormStore();
+        const forceReRender = () => {
+            forceUpdate({})
+        }
+        let formStore = new FormStore(forceReRender);
         let formInstance = formStore.getForm();
         formRef.current = formInstance;
     }
-    
+
     return [formRef.current];
 }

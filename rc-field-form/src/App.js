@@ -1,4 +1,4 @@
-import Form,{ Field } from "rc-field-form";
+import Form,{ Field } from "./rc-field-form";
 
 
 function App() {

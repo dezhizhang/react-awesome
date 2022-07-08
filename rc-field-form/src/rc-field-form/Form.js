@@ -14,7 +14,7 @@ const Form = ({initialValues,onFinish,children}) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <FieldContext.Provider>
+            <FieldContext.Provider value={formInstance}>
                 {children}
             </FieldContext.Provider>
         </form>
