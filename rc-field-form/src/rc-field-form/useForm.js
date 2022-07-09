@@ -13,7 +13,12 @@ class FormStore{
     getFieldValue = (name)=> {
         return this.store[name];
     }
-
+    setInitialValues = (initialValues,mounted) => {
+        if(!mounted) {
+            this.store = {...initialValues}
+        }
+        
+    }
     getFieldsValue = () => {
         return this.store;
     }
@@ -32,6 +37,7 @@ class FormStore{
             setFieldValue:this.setFieldValue,
             getFieldValue:this.getFieldValue,
             setFieldsValue:this.setFieldsValue,
+            setInitialValues:this.setInitialValues,
         }
     }
 }

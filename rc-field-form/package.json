@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "async-validator": "^4.2.5",
     "babel-plugin-import": "^1.13.5",
     "customize-cra": "^1.0.0",
     "less": "^4.1.3",

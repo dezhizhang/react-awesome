@@ -12,7 +12,7 @@ function App() {
         initialValues={{username:'',password:''}}
         onFinish={handleFinish}
         >
-        <Field name="username">
+        <Field name="username" rules={{require:true}}>
             <input placeholder="用户名"/>
         </Field>
         <Field name="password">

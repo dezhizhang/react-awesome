@@ -2,7 +2,7 @@ import React from "react";
 import FieldContext from "./FieldContext";
 import useForm from "./useForm";
 
-const Form = ({initialValues,onFinish,children}) => {
+const Form = ({initialValues,onFinish,onFinishFailed,children}) => {
     const [formInstance] = useForm();
     const handleSubmit = (ev) => {
         ev.preventDefault();
@@ -11,7 +11,12 @@ const Form = ({initialValues,onFinish,children}) => {
     }
 
     formInstance.setCallbacks({onFinish});
-
+    const mountRef = React.useRef(null);
+    formInstance.setInitialValues(initialValues,mountRef.current);
+    if(!mountRef.current) {
+        mountRef.current = true;
+        
+    }
     return (
         <form onSubmit={handleSubmit}>
             <FieldContext.Provider value={formInstance}>
