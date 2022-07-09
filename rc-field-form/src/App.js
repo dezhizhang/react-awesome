@@ -12,10 +12,10 @@ function App() {
         initialValues={{username:'',password:''}}
         onFinish={handleFinish}
         >
-        <Field name="username" rules={{require:true}}>
+        <Field name="username" rules={[{require:true}]}>
             <input placeholder="用户名"/>
         </Field>
-        <Field name="password">
+        <Field name="password" rules={[{require:true}]}>
         <input placeholder="用户名"/>
         </Field>
         <button>提交</button>

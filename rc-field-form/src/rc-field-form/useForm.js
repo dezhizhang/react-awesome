@@ -1,5 +1,5 @@
 import React from "react";
-import Schema from 'async-validator';
+import Schema from './async-validator';
 
 class FormStore{
     constructor() {
@@ -47,12 +47,13 @@ class FormStore{
             const rules = entity.props.rules;
             if(rules && rules.length > 0) {
                 const config = rules.reduce((memo,rule) => {
-                    memo = {...memo,...rule}
+                    memo = {...memo,...rule};
+                    return memo;
                 },{});
                 descriptor[entity.props.name] = config;
             }
             return descriptor
-        },[])
+        },[]);
         return new Schema(descriptor).validate(values);
     }
     getForm = () => {
