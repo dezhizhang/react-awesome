@@ -6,6 +6,9 @@ class Field extends React.Component {
     componentDidMount() {
         this.context.registerField(this);
     }
+    onStoreChange = () => {
+        this.forceUpdate();
+    }
     getControlled = (childProps) => {
         const { name } = this.props;
         let { getFieldValue,setFieldValue} = this.context;

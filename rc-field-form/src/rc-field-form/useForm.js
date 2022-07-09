@@ -11,10 +11,17 @@ class FormStore{
         this.fieldEntities.push(filedEntity)
     }
     setFieldsValue = (newStore) => {
+        this._notify();
         this.store = {...this.store,...newStore} 
     }
+    _notify = () => {
+        this.fieldEntities.forEach(entity => entity.onStoreChange());
+    }
     setFieldValue = (name,value) => {
-        return this.store[name] = value;
+        this.store[name] = value;
+        this._notify();
+        return this.store;
+        // return
     }
     getFieldValue = (name)=> {
         return this.store[name];

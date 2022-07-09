@@ -4,7 +4,6 @@ class Schema{
         this.descriptor = descriptor;
     }
     validate(values) {
-        debugger
         return new Promise((resolve,reject) => {
             let errorFields = [];
             for(let name in this.descriptor) {
