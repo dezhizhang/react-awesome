@@ -7,8 +7,15 @@ class FormStore{
     setFieldsValue = (newStore) => {
         this.store = {...this.store,...newStore} 
     }
+    setFieldValue = (name,value) => {
+        return this.store[name] = value;
+    }
     getFieldValue = (name)=> {
         return this.store[name];
+    }
+
+    getFieldsValue = () => {
+        return this.store;
     }
     setCallbacks = (callbacks) => {
         this.callbacks = callbacks;
@@ -19,7 +26,10 @@ class FormStore{
     }
     getForm = () => {
         return {
+            submit:this.submit,
+           
             setCallbacks:this.setCallbacks,
+            setFieldValue:this.setFieldValue,
             getFieldValue:this.getFieldValue,
             setFieldsValue:this.setFieldsValue,
         }
