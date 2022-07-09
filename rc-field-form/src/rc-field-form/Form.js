@@ -10,12 +10,12 @@ const Form = ({initialValues,onFinish,onFinishFailed,children}) => {
         formInstance.submit();
     }
 
-    formInstance.setCallbacks({onFinish});
+    formInstance.setCallbacks({onFinish,onFinishFailed});
     const mountRef = React.useRef(null);
     formInstance.setInitialValues(initialValues,mountRef.current);
     if(!mountRef.current) {
         mountRef.current = true;
-        
+
     }
     return (
         <form onSubmit={handleSubmit}>

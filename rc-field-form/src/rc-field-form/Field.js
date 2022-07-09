@@ -3,6 +3,9 @@ import FieldContext from "./FieldContext";
 
 class Field extends React.Component {
     static contextType = FieldContext;
+    componentDidMount() {
+        this.context.registerField(this);
+    }
     getControlled = (childProps) => {
         const { name } = this.props;
         let { getFieldValue,setFieldValue} = this.context;
