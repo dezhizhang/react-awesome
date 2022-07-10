@@ -1,7 +1,8 @@
-import { useRef,useEffect } from 'react'
+import { useRef,useEffect,useState } from 'react'
 import './index.css';
 
 function Dragger(props) {
+    const [uploadFiles,setUploadFiles] = useState([])
     const divRef = useRef();
 
     const handleDragEnter = (ev) => {
@@ -30,8 +31,37 @@ function Dragger(props) {
     }
 
     const upload = (files) => {
+        for(let i=0;i < files.length;i++) {
+            const file = files[i];
+            let formData = new FormData();
+            formData.append('filename',file.name);
+            formData.append(props.name,file);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST',props.action,true);
+            xhr.responseType = 'application/json';
+            let uploadFile = {
+                file,
+                url:undefined,
+                percent:0,
+                status:'upload'
+            }
+            uploadFiles.push(uploadFile);
+            xhr.onprogress = handleProgress();
+            xhr.upload.onprogress = handleProgress();
+
+            xhr.onreadystatechange = () => {
+                if(xhr.readyState === 4 && xhr.status === 200) {
+                    uploadFile.url = xhr.response.url;
+                    props.onChange(uploadFile);
+                }
+            }
+            xhr.send(formData);
+        }
         console.log('files',files);
 
+    }
+
+    const handleProgress = (ev) => {
     }
   
     useEffect(() => {
@@ -45,8 +75,8 @@ function Dragger(props) {
             divRef.current.removeEventListener('dragleave',handleDragLeave);
             divRef.current.removeEventListener('drop',handleDragDrop);
         }
-    },[]);
-    
+    },[divRef]);
+
     return <div ref={divRef} className="container">{props.children}</div>
 }
 
