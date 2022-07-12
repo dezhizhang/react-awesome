@@ -11,11 +11,11 @@ export default defineConfig({
   plugins: [react({
     jsxRuntime:'classic'
   })],
-  css:{
-    preprocessorOptions:{
-      less:{
-        javascriptEnable:true
-      }
-    }
-  }
+  // css:{
+  //   preprocessorOptions:{
+  //     less:{
+  //       javascriptEnable:true
+  //     }
+  //   }
+  // }
 })
