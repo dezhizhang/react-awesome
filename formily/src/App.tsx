@@ -1,18 +1,35 @@
 import { createForm } from '@formily/core';
-import { Field } from '@formily/react';
+import 'antd/dist/antd.less'
+import { createSchemaField, Field } from '@formily/react';
 import { Form, FormItem, Input, NumberPicker } from '@formily/antd';
 const form = createForm();
 
 
+const SchemaField = createSchemaField({
+  components:{
+    FormItem:Input,
+  }
+})
+
+const schema = {
+  type:'object',
+  properties:{
+    name:{
+      title:'姓名',
+      type:'string',
+      required:true,
+      'x-decorator':'FormItem',
+      'x-component':'Input'
+    }
+  }
+}
+
+function App() {
+  return <Form labelCol={6} wrapperCol={6}>
+    <SchemaField schema={schema}/>
+  </Form>
+}
+
+export default App;
 
 
-// function App() {
-//   return (
-//     <Form form={form} labelCol={6} wrapperCol={6}>
-//       <Field name="name" title="姓名" required component={[Input, {}]} decorator={[FormItem, {}]} />
-//       <Field name="name" title="姓名" required component={[NumberPicker, {}]} decorator={[FormItem, {}]} />
-//     </Form>
-//   )
-// }
-
-// export default App
