@@ -5,12 +5,16 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-18 06:23:53
  * :last editor: 张德志
- * :date last edited: 2022-07-18 06:30:35
+ * :date last edited: 2022-07-18 06:49:03
  */
-const connect = require('connect');
 const http = require('http');
+const connect = require('connect');
+const serverStaticMiddleware = require('./middlewares/static')
+const resolveConfig = require('./config')
 
-function createServer() {
+
+async function createServer() {
+    const config = await resolveConfig();
     const middlewares  = connect();
     const server = {
         async listen(port) {
@@ -19,6 +23,7 @@ function createServer() {
             })
         }
     }
+    middlewares.use(serverStaticMiddleware(config))
     return server
 }
 
