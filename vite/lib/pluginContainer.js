@@ -5,9 +5,9 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-19 06:55:18
  * :last editor: 张德志
- * :date last edited: 2022-07-19 07:11:10
+ * :date last edited: 2022-07-20 06:02:41
  */
-
+const path = require('path');
 const { normalizePath } = require("./utils");
 
 async function createPluginContainer({root,plugins}) {
