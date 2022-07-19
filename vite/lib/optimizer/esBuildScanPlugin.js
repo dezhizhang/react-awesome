@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-19 06:18:22
  * :last editor: 张德志
- * :date last edited: 2022-07-20 06:08:00
+ * :date last edited: 2022-07-20 06:54:01
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -16,7 +16,7 @@ const htmlTypeReg = /\.html$/;
 async function esBuildScanPlugin(config,depImports) {
 
   const resolvePlugin = require('../plugins/resolve');
-  
+
 
   config.plugins = [resolvePlugin(config)];
   
@@ -39,8 +39,14 @@ async function esBuildScanPlugin(config,depImports) {
       });
 
     // 读取文件
-      build.onLoad({filter:/s/,namespace:'html'},async({path}) => {
-
+      build.onLoad({filter:htmlTypeReg,namespace:'html'},async({path}) => {
+        const html = fs.readFileSync(path,'utf-8');
+        const [,scriptSrc] = html.match(scriptModuleReg);
+        const js = `import ${JSON.stringify(scriptSrc)}`;
+        return {
+          contents:js,
+          loader:'js'
+        }
       })
     }
  }
