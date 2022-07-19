@@ -5,13 +5,13 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-18 06:23:53
  * :last editor: 张德志
- * :date last edited: 2022-07-19 06:09:16
+ * :date last edited: 2022-07-20 06:45:07
  */
 const http = require('http');
 const connect = require('connect');
 const serverStaticMiddleware = require('./middlewares/static')
 const resolveConfig = require('./config')
-
+const { createOptimizeDepsRun } = require('./optimizer');
 
 async function createServer() {
     const config = await resolveConfig();

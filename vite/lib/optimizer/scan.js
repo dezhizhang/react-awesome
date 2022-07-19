@@ -5,12 +5,12 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-19 06:11:01
  * :last editor: 张德志
- * :date last edited: 2022-07-20 05:57:43
+ * :date last edited: 2022-07-20 06:47:13
  */
 const path = require('path');
 const { build } = require('esbuild');
-
-function scanImports(config) {
+const esBuildScanPlugin = require('./esBuildScanPlugin');
+async function scanImports(config) {
     const depImports = {};
 
     const esPlugin = await esBuildScanPlugin(config, depImports);

@@ -5,12 +5,12 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-20 06:09:13
  * :last editor: 张德志
- * :date last edited: 2022-07-20 06:41:05
+ * :date last edited: 2022-07-20 06:43:12
  */
 
 const fs = require('fs-extra');
 const path = require('path');
-
+const resolve = require('resolve');
 
 function resolvePlugin() {
     return {
