@@ -5,19 +5,16 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-19 06:18:22
  * :last editor: 张德志
- * :date last edited: 2022-07-20 06:54:01
+ * :date last edited: 2022-07-20 07:03:26
  */
 const fs = require('fs-extra');
 const path = require('path');
 const { createPluginContainer } = require('../pluginContainer');
+const resolvePlugin = require('../plugins/resolve');
 
 const htmlTypeReg = /\.html$/;
-
+const scriptModuleReg = /<script type="module" src="(.+?)"><\/script>/
 async function esBuildScanPlugin(config,depImports) {
-
-  const resolvePlugin = require('../plugins/resolve');
-
-
   config.plugins = [resolvePlugin(config)];
   
   const container = await createPluginContainer(config);
