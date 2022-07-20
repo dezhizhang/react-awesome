@@ -5,14 +5,14 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-20 06:09:13
  * :last editor: 张德志
- * :date last edited: 2022-07-20 07:02:56
+ * :date last edited: 2022-07-21 05:56:54
  */
 
 const fs = require('fs-extra');
 const path = require('path');
 const resolve = require('resolve');
 
-function resolvePlugin() {
+function resolvePlugin(config) {
     return {
         name: 'vite:resolve',
         resolveId(importee, importer) {

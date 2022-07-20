@@ -5,15 +5,17 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-19 06:18:22
  * :last editor: 张德志
- * :date last edited: 2022-07-20 07:03:26
+ * :date last edited: 2022-07-21 06:00:15
  */
 const fs = require('fs-extra');
 const path = require('path');
 const { createPluginContainer } = require('../pluginContainer');
 const resolvePlugin = require('../plugins/resolve');
+const { normalizePath } = require('../utils');
 
 const htmlTypeReg = /\.html$/;
-const scriptModuleReg = /<script type="module" src="(.+?)"><\/script>/
+const scriptModuleReg = /<script type="module" src="(.+?)"><\/script>/;
+const jsTypesReg = /\.js$/
 async function esBuildScanPlugin(config,depImports) {
   config.plugins = [resolvePlugin(config)];
   
@@ -24,7 +26,7 @@ async function esBuildScanPlugin(config,depImports) {
   }
  return {
     name:'vite:dep-scan',
-    steup(build) {
+    setup(build) {
       build.onResolve({filter:htmlTypeReg},async({path,importer}) => {
         const resolveId = await resolve(path,importer);
         if(resolveId) {
@@ -35,14 +37,38 @@ async function esBuildScanPlugin(config,depImports) {
         }
       });
 
+    build.onResolve({filter:/.*/},async({path,importer}) => {
+        const resolveId = await resolve(path,importer);
+        if(resolveId) {
+          const id = resolveId.id || resolveId;
+          const included = id.includes('node_modules');
+          if(included) {
+            depImports[path] = normalizePath(id);
+            return {
+              path:id,
+              external:true,
+            }
+          }
+          return {path:id}
+        }
+      });
+
     // 读取文件
-      build.onLoad({filter:htmlTypeReg,namespace:'html'},async({path}) => {
-        const html = fs.readFileSync(path,'utf-8');
+      build.onLoad({filter:htmlTypeReg},async({id}) => {
+        const html = fs.readFileSync(id,'utf-8');
         const [,scriptSrc] = html.match(scriptModuleReg);
         const js = `import ${JSON.stringify(scriptSrc)}`;
         return {
           contents:js,
           loader:'js'
+        }
+      });
+      build.onLoad({filter:jsTypesReg},async({pathDir}) => {
+        let ext = path.extname(pathDir).slice(1);
+        let contents = fs.readFileSync(pathDir,'utf-8');
+        return {
+          contents,
+          loader:ext
         }
       })
     }
