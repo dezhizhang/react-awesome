@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-18 06:23:53
  * :last editor: 张德志
- * :date last edited: 2022-07-20 06:45:07
+ * :date last edited: 2022-07-21 06:04:13
  */
 const http = require('http');
 const connect = require('connect');
@@ -17,7 +17,9 @@ async function createServer() {
     const config = await resolveConfig();
     const middlewares  = connect();
     const server = {
+
         async listen(port) {
+            debugger
             await runOptimize(config);
             http.createServer(middlewares).listen(port,() => {
                 console.log(`server run in :http://localhost:${port}`)

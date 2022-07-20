@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-19 06:18:22
  * :last editor: 张德志
- * :date last edited: 2022-07-21 06:00:15
+ * :date last edited: 2022-07-21 06:16:52
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -20,15 +20,19 @@ async function esBuildScanPlugin(config,depImports) {
   config.plugins = [resolvePlugin(config)];
   
   const container = await createPluginContainer(config);
+  console.log(container);
   
   const resolve = async(importee,importer)=> {
+    debugger
     return await container.resolveId(importee,importer);
   }
  return {
     name:'vite:dep-scan',
     setup(build) {
       build.onResolve({filter:htmlTypeReg},async({path,importer}) => {
+        console.log('resolveId ',path,'importer',importer)
         const resolveId = await resolve(path,importer);
+       
         if(resolveId) {
             return {
                 path:resolveId.id || resolveId,
@@ -55,13 +59,14 @@ async function esBuildScanPlugin(config,depImports) {
 
     // 读取文件
       build.onLoad({filter:htmlTypeReg},async({id}) => {
-        const html = fs.readFileSync(id,'utf-8');
-        const [,scriptSrc] = html.match(scriptModuleReg);
-        const js = `import ${JSON.stringify(scriptSrc)}`;
-        return {
-          contents:js,
-          loader:'js'
-        }
+        console.log('-------',id);
+        // const html = fs.readFileSync(id,'utf-8');
+        // const [,scriptSrc] = html.match(scriptModuleReg);
+        // const js = `import ${JSON.stringify(scriptSrc)}`;
+        // return {
+        //   contents:js,
+        //   loader:'js'
+        // }
       });
       build.onLoad({filter:jsTypesReg},async({pathDir}) => {
         let ext = path.extname(pathDir).slice(1);
