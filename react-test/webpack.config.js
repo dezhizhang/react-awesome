@@ -5,13 +5,13 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-07-15 05:11:46
  * :last editor: 张德志
- * :date last edited: 2022-07-16 15:04:08
+ * :date last edited: 2022-08-07 22:15:11
  */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: './src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
@@ -24,5 +24,6 @@ module.exports = {
             template:'./public/index.html',
             inject:'body'
         })
-    ]
+    ],
+   
 }
