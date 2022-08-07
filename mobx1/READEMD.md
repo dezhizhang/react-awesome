@@ -103,3 +103,21 @@ export default observer(function() {
     </div>
 })
 ```
+### 使用本地的可观察对像
+```js
+export default function() {
+    const store = useLocalObservable(() =>({
+        number:1,
+        add() {
+            this.number++
+        }
+    }));
+    return useObserver(() => (
+        <div>
+            <p>{store.number}</p>
+            <button onClick={store.add}>+</button>
+        </div>
+    ))
+}
+
+```

@@ -1,24 +1,16 @@
+import { useLocalObservable,useObserver } from 'mobx-react';
 
-import { makeAutoObservable } from 'mobx';
-import { observer } from 'mobx-react';
-
-class Store{
-    number = 1;
-    constructor() {
-        makeAutoObservable(this,{},{autoBind:true})
-    }
-    add() {
-        this.number++;
-    }
+export default function() {
+    const store = useLocalObservable(() =>({
+        number:1,
+        add() {
+            this.number++
+        }
+    }));
+    return useObserver(() => (
+        <div>
+            <p>{store.number}</p>
+            <button onClick={store.add}>+</button>
+        </div>
+    ))
 }
-
-const store = new Store();
-
-export default observer(function() {
-    console.log(store);
-    return <div>
-
-        <p>{store.number}</p>
-        <button onClick={store.add}>+</button>
-    </div>
-})
