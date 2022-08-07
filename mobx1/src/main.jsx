@@ -5,13 +5,18 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-07 16:51:07
  * :last editor: 张德志
- * :date last edited: 2022-08-07 19:48:39
+ * :date last edited: 2022-08-07 21:21:55
  */
-import React from "react";
-import { createRoot } from 'react-dom/client';
-import Container from './components/Container';
+// let obj ={name:1};
 
-const root = createRoot(document.getElementById('root'));
-root.render(
-    <Container/>
-)
+// let proxyObj = new Proxy(obj,{
+//     set(target,key,value) {
+//         return Reflect.set(target,key,value)
+//     },
+//     get(target,key) {
+//         return Reflect.get(target,key)
+//     }
+// });
+
+// proxyObj.name = "hello";
+// console.log(proxyObj.name)
