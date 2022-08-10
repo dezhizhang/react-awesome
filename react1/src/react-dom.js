@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-10 05:23:40
  * :last editor: 张德志
- * :date last edited: 2022-08-10 05:57:39
+ * :date last edited: 2022-08-10 06:32:34
  */
 
 import { REACT_TEXT } from "./constants";
@@ -38,7 +38,9 @@ function createDOM(vdom) {
     console.log(typeof type);
     if (type === REACT_TEXT) {
         dom = document.createTextNode(props);
-    } else {
+    } else if(typeof type === 'function') {
+        
+    }else  {
         dom = document.createElement(type);
     }
     if (props) {
