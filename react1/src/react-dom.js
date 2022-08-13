@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-10 05:23:40
  * :last editor: 张德志
- * :date last edited: 2022-08-14 06:03:03
+ * :date last edited: 2022-08-14 06:38:47
  */
 
 import { REACT_TEXT } from "./constants";
@@ -19,7 +19,9 @@ function updateProps(dom, newProps) {
             for (let attr in styleObj) {
                 dom.style[attr] = styleObj[attr]
             }
-        } else {
+        } else if(/^on[A-Z].*/.test(key)) {
+            dom[key.toLocaleLowerCase()] = newProps[key];
+        }else {
             dom[key] = newProps[key]
         }
     }
