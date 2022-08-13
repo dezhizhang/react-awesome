@@ -1,15 +1,16 @@
 /*
  * :file description: 
- * :name: /react1/src/React.js
+ * :name: /react1/src/react.js
  * :author: 张德志
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-09 05:35:23
  * :last editor: 张德志
- * :date last edited: 2022-08-09 06:22:27
+ * :date last edited: 2022-08-14 06:03:44
  */
 import {
     REACT_ELEMENT,
 } from './constants';
+import { Component } from './component';
 import { wrapToVdom } from './utils';
 
 function createElement(type, config, children) {
@@ -39,11 +40,9 @@ function createElement(type, config, children) {
     }
 }
 
-
-
-
 const React = {
-    createElement
+    createElement,
+    Component,
 }
 
 export default React;

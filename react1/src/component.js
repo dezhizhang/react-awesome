@@ -5,15 +5,13 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-14 05:24:51
  * :last editor: 张德志
- * :date last edited: 2022-08-14 05:25:58
+ * :date last edited: 2022-08-14 05:46:16
  */
 
-class Component{
+export class Component{
     static isReactComponent = true
     constructor(props) {
         this.props = props;
     }
 }
 
-
-export default Component;
