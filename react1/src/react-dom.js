@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-10 05:23:40
  * :last editor: 张德志
- * :date last edited: 2022-08-10 06:32:34
+ * :date last edited: 2022-08-14 05:27:24
  */
 
 import { REACT_TEXT } from "./constants";
@@ -62,9 +62,7 @@ function mount(vdom, container) {
 
 
 function render(vdom, container) {
-    mount(vdom,container)
-    // let newDOM = createDOM(vdom);
-    // container.appendChild(newDOM);
+    mount(vdom,container);
 }
 
 
