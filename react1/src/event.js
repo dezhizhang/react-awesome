@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-14 09:12:37
  * :last editor: 张德志
- * :date last edited: 2022-08-14 09:44:36
+ * :date last edited: 2022-08-14 10:29:17
  */
 
 import { updateQueue } from "./component";
@@ -22,10 +22,46 @@ function dispatchEvent(event) {
     let { target,type } = event;
     let { store } = target;
     let eventType = `on${type}`;
+    let syntheticEvent = createSyntheticEvent(event);
     let handler = store && store[eventType];
-    handler && handler(event);
+    handler && handler(syntheticEvent);
     updateQueue.batchUpdate();
-    
-
 
 }
+
+
+function createSyntheticEvent(nativeEvent) {
+    let syntheticEvent = {};
+    for(let key in nativeEvent) {
+        let value = nativeEvent[key];
+        if(typeof value === 'function') value = value.bind(nativeEvent);
+        syntheticEvent[key] = value;
+    }
+    syntheticEvent.nativeEvent = nativeEvent;
+    syntheticEvent.isDefaultPrevented = false;
+    syntheticEvent.preventDefault = preventDefault();
+    syntheticEvent.isPropagationStopped = false;
+    syntheticEvent.stopPropagation = stopPropagation;
+    
+}
+
+function preventDefault() {
+    this.isDefaultPrevented = true;
+    const event = this.nativeEvent;
+    if(event.preventDefault) {
+        event.preventDefault();
+    }else {
+        event.returnValue = false;
+    }
+}
+
+function stopPropagation() {
+    this.isPropagationStopped = true;
+    const event = this.nativeEvent;
+    if(event.stopPropagation) {
+        event.stopPropagation();
+    }else {
+        event.cancelBubble = true;
+    }
+}
+
