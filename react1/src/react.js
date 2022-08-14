@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-09 05:35:23
  * :last editor: 张德志
- * :date last edited: 2022-08-14 06:03:44
+ * :date last edited: 2022-08-15 04:47:36
  */
 import {
     REACT_ELEMENT,
@@ -40,9 +40,15 @@ function createElement(type, config, children) {
     }
 }
 
+
+function createRef() {
+    return { current:null }
+}
+
 const React = {
     createElement,
     Component,
+    createRef,
 }
 
 export default React;

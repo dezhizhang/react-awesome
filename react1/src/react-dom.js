@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-10 05:23:40
  * :last editor: 张德志
- * :date last edited: 2022-08-14 09:55:12
+ * :date last edited: 2022-08-15 04:58:14
  */
 
 import { REACT_TEXT } from "./constants";
@@ -21,6 +21,7 @@ function updateProps(dom, newProps) {
                 dom.style[attr] = styleObj[attr]
             }
         } else if(/^on[A-Z].*/.test(key)) {
+            debugger;
             addEvent(dom,key.toLocaleLowerCase(),newProps[key]);
         }else {
             dom[key] = newProps[key]
@@ -39,9 +40,10 @@ function mountFunctionComponent(vdom) {
 }
 
 function mountClassComponent(vdom){
-    let {type:ClassComponent,props} = vdom;
+    let {type:ClassComponent,props,ref} = vdom;
     let classInstance = new ClassComponent(props);
     vdom.classInstance = classInstance;
+    if(ref) ref.current = classInstance;
     let renderVdom = classInstance.render();
     // 缓存上一次的dom
     classInstance.oldRenderVdom = vdom.oldRenderVdom =  renderVdom;
@@ -56,7 +58,7 @@ function reconcileChildren(children,parentDOM) {
 }
 
 function createDOM(vdom) {
-    let { type, props } = vdom;
+    let { type, props,ref } = vdom;
     let dom;
     console.log(typeof type);
     if (type === REACT_TEXT) {
@@ -81,7 +83,7 @@ function createDOM(vdom) {
     }
     // 在创建真实DOM的时候，把虚拟DOM和真实DOM进行关联
     vdom.dom = dom;
-
+    if(ref) ref.current = dom;
     return dom;
 }
 
