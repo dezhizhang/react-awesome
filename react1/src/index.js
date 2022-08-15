@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-09 05:21:58
  * :last editor: 张德志
- * :date last edited: 2022-08-15 04:40:58
+ * :date last edited: 2022-08-16 05:43:32
  */
 // import React from "react"
 // import ReactDOM from "react-dom"
@@ -26,18 +26,18 @@ class ClassComponent extends React.Component{
         }
     }
     handleClick = () => {
-        // this.setState({number:this.state.number + 1});
-        // console.log(this.state);
-        // this.setState({number:this.state.number + 1});
-        // console.log(this.state);
+        this.setState({number:this.state.number + 1});
+        console.log(this.state);
+        this.setState({number:this.state.number + 1});
+        console.log(this.state);
 
-        // setTimeout(() => {
-        //     this.setState({number:this.state.number + 1});
-        //     console.log(this.state);
-        //     this.setState({number:this.state.number + 1});
-        //     console.log(this.state);
+        setTimeout(() => {
+            this.setState({number:this.state.number + 1});
+            console.log(this.state);
+            this.setState({number:this.state.number + 1});
+            console.log(this.state);
             
-        // },50)
+        },50)
         console.log('hello1');
     }
     render() {

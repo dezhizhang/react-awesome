@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-10 05:23:40
  * :last editor: 张德志
- * :date last edited: 2022-08-15 04:58:14
+ * :date last edited: 2022-08-16 05:58:16
  */
 
 import { REACT_TEXT } from "./constants";
@@ -108,10 +108,31 @@ export function findDOM(vdom) {
 }
 
 export function compareTwoVdom(parentDOM,oldVdom,newVdom) {
-    let oldDOM = findDOM(oldVdom);
-    let newDOM = findDOM(newVdom);
+    // let oldDOM = findDOM(oldVdom);
+    // let newDOM = createDOM(newVdom);
     
-    parentDOM.replaceChild(oldDOM,newDOM);
+    // parentDOM.replaceChild(oldDOM,newDOM);
+
+    if(!oldVdom && !newVdom) {
+        return null
+    }else if(oldVdom && !newVdom) {
+        unmountVdom(oldVdom);
+    }
+
+}
+
+function unmountVdom(vdom) {
+    const { props,ref } = vdom;
+    const currentDOM = findDOM(vdom);
+    if(vdom.classInstance && vdom.classInstance.componentWillUnmount) {
+        vdom.classInstance.componentWillUnmount();
+    }
+    if(ref) ref.current = null;
+    if(props.children) {
+        let children = Array.isArray(props.children) ? props.children:[props.children];
+        children.forEach(unmountVdom);
+    }
+    if(currentDOM) currentDOM.remove();
 
 }
 
