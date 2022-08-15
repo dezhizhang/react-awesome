@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-10 05:23:40
  * :last editor: 张德志
- * :date last edited: 2022-08-16 05:58:16
+ * :date last edited: 2022-08-16 06:19:31
  */
 
 import { REACT_TEXT } from "./constants";
@@ -117,7 +117,45 @@ export function compareTwoVdom(parentDOM,oldVdom,newVdom) {
         return null
     }else if(oldVdom && !newVdom) {
         unmountVdom(oldVdom);
+    }else if(oldVdom && newVdom && oldVdom.type !== newVdom.type) {
+        unmountVdom(oldVdom);
+        const newDOM = createDOM(newVdom);
+        parentDOM.appendChild(newDOM);
+    }else {
+        updateElement(oldVdom,newVdom);
     }
+
+}
+
+
+function updateElement(oldVdom,newVdom) {
+    if(oldVdom.type === REACT_TEXT) {
+        let currentDOM = newVdom.dom = findDOM(oldVdom);
+        if(oldVdom.props !== newVdom.props) {
+            currentDOM.textContent = newVdom.props;
+        }
+    }else if(typeof oldVdom.type === 'string') {
+        let currentDOM = newVdom.dom = findDOM(oldVdom);
+        updateProps(currentDOM,oldVdom.props,newVdom.props);
+        updateChildren(currentDOM,oldVdom.props.children,newVdom.props.children);
+    }else if(typeof oldVdom.type === 'function') {
+        if(oldVdom.type.isReactComponent) {
+            updateClassComponent(oldVdom,newVdom);
+        }else {
+            updateFunctionComponent(oldVdom,newVdom)
+        }
+    }
+}
+
+function updateClassComponent() {
+
+}
+
+function updateFunctionComponent() {
+    
+}
+
+function updateChildren() {
 
 }
 
