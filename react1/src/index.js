@@ -5,53 +5,55 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-09 05:21:58
  * :last editor: 张德志
- * :date last edited: 2022-08-16 05:43:32
+ * :date last edited: 2022-08-20 06:26:45
  */
 // import React from "react"
 // import ReactDOM from "react-dom"
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-
-
-function FunctionComponent(props) {
-    return <h1 className='title' style={{color:'red'}}>{props.name}</h1>
-}
-
-class ClassComponent extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            number:0
-        }
+class Button extends React.Component{
+    state = {name:'Button'}
+    componentDidMount() {
+        console.log(' Button componentDidMount')
     }
-    handleClick = () => {
-        this.setState({number:this.state.number + 1});
-        console.log(this.state);
-        this.setState({number:this.state.number + 1});
-        console.log(this.state);
-
-        setTimeout(() => {
-            this.setState({number:this.state.number + 1});
-            console.log(this.state);
-            this.setState({number:this.state.number + 1});
-            console.log(this.state);
-            
-        },50)
-        console.log('hello1');
+    componentWillMount() {
+        console.log('Button componentWillMount')
     }
     render() {
-        return (
-            <div>
-                <p>{this.state.number}</p>
-                <button onClick={this.handleClick}>+</button>
-            </div>
-        )
+        return <button name={this.state.name} title={this.props.title}/>
     }
 }
 
 
+function counterWrapper(OlderComponent) {
+    return class NewButton extends OlderComponent {
+        state = {number:0}
+        componentDidMount() {
+            console.log('NewButton componentDidMount');
+            super.componentDidMount();
+            
+        }
+        componentWillMount() {
+            console.log('NewButton componentWillMount');
+            super.componentWillMount();
+        }
+        handleClick = () => {
+            this.setState({number:this.state.number + 1});
+        }
+        render() {
+            console.log('new Button render')
+            const element = super.render();
+            let newProps = {
+                ...element.props,
+                onClick:this.handleClick
+            }
+            return React.cloneElement(element,newProps,this.state.number)
+        }
+    }
+}
 
-let element = <ClassComponent name="hello world" />
-console.log('elem',element);
-ReactDOM.render(element,document.getElementById('root'))
+
+const CounterButton = counterWrapper(Button);
+
+ReactDOM.render(<CounterButton/>,document.getElementById('root'))
