@@ -5,55 +5,30 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-09 05:21:58
  * :last editor: 张德志
- * :date last edited: 2022-08-20 06:26:45
+ * :date last edited: 2022-08-22 06:29:08
  */
 // import React from "react"
 // import ReactDOM from "react-dom"
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class Button extends React.Component{
-    state = {name:'Button'}
-    componentDidMount() {
-        console.log(' Button componentDidMount')
-    }
-    componentWillMount() {
-        console.log('Button componentWillMount')
+class Dialog extends React.Component{
+    constructor(props) {
+        super(props);
+        this.node = document.createElement('div');
+        document.body.appendChild(this.node);
     }
     render() {
-        return <button name={this.state.name} title={this.props.title}/>
+        return ReactDOM.createPortal(
+            <div className='diallog'>{this.props.children}</div>,
+            this.node
+        )
+    }
+}
+class App extends React.Component{
+    render() {
+        return <div><Dialog>模态框</Dialog></div>
     }
 }
 
-
-function counterWrapper(OlderComponent) {
-    return class NewButton extends OlderComponent {
-        state = {number:0}
-        componentDidMount() {
-            console.log('NewButton componentDidMount');
-            super.componentDidMount();
-            
-        }
-        componentWillMount() {
-            console.log('NewButton componentWillMount');
-            super.componentWillMount();
-        }
-        handleClick = () => {
-            this.setState({number:this.state.number + 1});
-        }
-        render() {
-            console.log('new Button render')
-            const element = super.render();
-            let newProps = {
-                ...element.props,
-                onClick:this.handleClick
-            }
-            return React.cloneElement(element,newProps,this.state.number)
-        }
-    }
-}
-
-
-const CounterButton = counterWrapper(Button);
-
-ReactDOM.render(<CounterButton/>,document.getElementById('root'))
+ReactDOM.render(<App/>,document.getElementById('root'))
