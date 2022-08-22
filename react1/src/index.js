@@ -5,33 +5,34 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-09 05:21:58
  * :last editor: 张德志
- * :date last edited: 2022-08-23 04:58:56
+ * :date last edited: 2022-08-23 05:29:19
  */
 // import React from "react"
 // import ReactDOM from "react-dom"
-import React, { useState,memo } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
-function Child({data,handleClick}) {
-    console.log('Child render');
-    return <button onClick={handleClick}>{data.number}</button>
+function reducer(state = {number:0},action) {
+    switch(action.type) {
+        case 'ADD':
+            return {number:state.number + 1};
+        case 'MINUS':
+            return {number:state.number - 1}
+        default:
+            return state
+    }
 }
-
-const MemoChild = memo(Child);
 
 function App() {
-    console.log('App render');
-    const [name, setName] = useState('zhang');
-    const [number,setNumber] = useState(0);
-    const data = React.useMemo(() => ({number}),[number])
-    let handleClick = React.useCallback(() => setNumber(number + 1),[number]);
-
-    return <div>
-        <input type="text" value={name} onChange={event => setName(event.target.value)} />
-        <MemoChild data={data} handleClick={handleClick}/>
-    </div>
+    const [state,dispatch] = React.useReducer(reducer,{number:0});
+    return (
+        <div>
+            <p>{state.number}</p>
+            <button onClick={() => dispatch({type:'ADD'})}>+</button>
+            <button onClick={() => dispatch({type:'MINUS'})}>-</button>
+        </div>
+    )
 }
 
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App/>,document.getElementById('root'))
 
