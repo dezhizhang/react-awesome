@@ -5,30 +5,33 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-09 05:21:58
  * :last editor: 张德志
- * :date last edited: 2022-08-22 06:29:08
+ * :date last edited: 2022-08-23 04:58:56
  */
 // import React from "react"
 // import ReactDOM from "react-dom"
-import React from 'react';
+import React, { useState,memo } from 'react';
 import ReactDOM from 'react-dom';
 
-class Dialog extends React.Component{
-    constructor(props) {
-        super(props);
-        this.node = document.createElement('div');
-        document.body.appendChild(this.node);
-    }
-    render() {
-        return ReactDOM.createPortal(
-            <div className='diallog'>{this.props.children}</div>,
-            this.node
-        )
-    }
-}
-class App extends React.Component{
-    render() {
-        return <div><Dialog>模态框</Dialog></div>
-    }
+function Child({data,handleClick}) {
+    console.log('Child render');
+    return <button onClick={handleClick}>{data.number}</button>
 }
 
-ReactDOM.render(<App/>,document.getElementById('root'))
+const MemoChild = memo(Child);
+
+function App() {
+    console.log('App render');
+    const [name, setName] = useState('zhang');
+    const [number,setNumber] = useState(0);
+    const data = React.useMemo(() => ({number}),[number])
+    let handleClick = React.useCallback(() => setNumber(number + 1),[number]);
+
+    return <div>
+        <input type="text" value={name} onChange={event => setName(event.target.value)} />
+        <MemoChild data={data} handleClick={handleClick}/>
+    </div>
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'));
+

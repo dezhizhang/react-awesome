@@ -98,4 +98,34 @@ class App extends React.Component{
 
 ReactDOM.render(<App/>,document.getElementById('root'))
 ```
+###  React.useMemo和React.memo，React.useCallback缓存数据
+```js
+import React, { useState,memo } from 'react';
+import ReactDOM from 'react-dom';
+
+function Child({data,handleClick}) {
+    console.log('Child render');
+    return <button onClick={handleClick}>{data.number}</button>
+}
+
+const MemoChild = memo(Child);
+
+function App() {
+    console.log('App render');
+    const [name, setName] = useState('zhang');
+    const [number,setNumber] = useState(0);
+    const data = React.useMemo(() => ({number}),[number])
+    let handleClick = React.useCallback(() => setNumber(number + 1),[number]);
+
+    return <div>
+        <input type="text" value={name} onChange={event => setName(event.target.value)} />
+        <MemoChild data={data} handleClick={handleClick}/>
+    </div>
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+```
+
 
