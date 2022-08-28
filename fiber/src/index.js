@@ -5,10 +5,10 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-28 10:22:21
  * :last editor: 张德志
- * :date last edited: 2022-08-29 06:36:29
+ * :date last edited: 2022-08-29 06:45:53
  */
 import React from './react';
-import ReactDOM from 'react-dom';
+import ReactDOM from './react-dom';
 
 const style = {border:'3px solid red',margin:'5px'}
 
