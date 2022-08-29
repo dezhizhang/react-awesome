@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-29 06:50:30
  * :last editor: 张德志
- * :date last edited: 2022-08-30 05:03:12
+ * :date last edited: 2022-08-30 05:11:10
  */
 
 import { ELEMENT_TEXT, TAG_HOST, TAG_ROOT, TAG_TEXT,PLACEMENT } from "./constants";
@@ -49,6 +49,20 @@ function performUnitofWork(currentFiber) {
     }
 }
 
+function updateDOM(stateNode,oldProps,newProps) {
+    
+}
+
+function createDOM(currentFiber) {
+    if(currentFiber.tag === TAG_TEXT) {
+        return document.createTextNode(currentFiber.props.text);
+    }else if(currentFiber.tag === TAG_HOST) {
+        let stateNode = document.createElement(currentFiber.type);
+        updateDOM(stateNode,{},currentFiber.props)
+        return stateNode;
+    }
+}
+
 function completeUnitOfWork() {
     
 }
@@ -56,6 +70,14 @@ function completeUnitOfWork() {
 function beginWork(currentFiber) {
     if(currentFiber.tag === TAG_ROOT) {
         updateHostRoot(currentFiber);
+    }else if(currentFiber.tag === TAG_TEXT) {
+        updateHostText(currentFiber);
+    }
+}
+
+function updateHostText(currentFiber) {
+    if(!currentFiber.stateNode) {
+        currentFiber.stateNode = createDOM(currentFiber);
     }
 }
 
