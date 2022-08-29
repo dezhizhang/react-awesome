@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-29 06:50:30
  * :last editor: 张德志
- * :date last edited: 2022-08-30 06:14:57
+ * :date last edited: 2022-08-30 06:23:43
  */
 
 import { ELEMENT_TEXT, TAG_HOST, TAG_ROOT, TAG_TEXT,PLACEMENT } from "./constants";
@@ -19,6 +19,26 @@ export function scheduleRoot(rootFiber) {
 
 } 
 
+function commitWork(currentFiber) {
+    if(!currentFiber) return;
+    let returnFiber = currentFiber.return;
+    let returnDOM = returnFiber.stateNode;
+    if(currentFiber.effectTag === PLACEMENT) {
+        returnDOM.appendChild(currentFiber.stateNode);
+    }
+    returnFiber.effectTag = null;
+}
+
+function commitRoot() {
+    let currentFiber =  workInProgressRoot.firstEffect;
+    while(currentFiber) {
+        commitWork(currentFiber);
+        currentFiber = currentFiber.nextEffect;
+    }
+
+    workInProgressRoot = null;
+}
+
 function workLoop(deadline) {
     let shouldYield = false;
 
@@ -27,7 +47,7 @@ function workLoop(deadline) {
         shouldYield = deadline.timeRemaining() < 1;
     }
     if(!nextUnitOfWork) {
-       
+       commitRoot();
     }
     requestIdleCallback(workLoop,{ timeout:500 });
 }
