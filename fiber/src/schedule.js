@@ -5,11 +5,11 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-29 06:50:30
  * :last editor: 张德志
- * :date last edited: 2022-08-30 05:11:10
+ * :date last edited: 2022-08-30 05:51:06
  */
 
 import { ELEMENT_TEXT, TAG_HOST, TAG_ROOT, TAG_TEXT,PLACEMENT } from "./constants";
-
+import { setProps } from './utils';
 let nextUnitOfWork = null;
 let workInProgressRoot = null;
 
@@ -34,6 +34,21 @@ function workLoop(deadline) {
 
 requestIdleCallback(workLoop,{ timeout:500 });
 
+function completeUnitOfWork(currentFiber) {
+  let returnFiber = currentFiber.return;
+  if(returnFiber) {
+    const effectTag = currentFiber.effectTag;
+    if(effectTag) {
+        if(returnFiber.lastEffect) {
+            returnFiber.lastEffect.nextEffect = currentFiber;
+        }else {
+            returnFiber.firstEffect = currentFiber;
+        }
+        returnFiber.lastEffect = currentFiber;
+    }
+  }
+}
+
 function performUnitofWork(currentFiber) {
     beginWork(currentFiber);
     if(currentFiber.child) {
@@ -50,7 +65,7 @@ function performUnitofWork(currentFiber) {
 }
 
 function updateDOM(stateNode,oldProps,newProps) {
-    
+    setProps(stateNode,oldProps,newProps);
 }
 
 function createDOM(currentFiber) {
@@ -63,8 +78,14 @@ function createDOM(currentFiber) {
     }
 }
 
-function completeUnitOfWork() {
-    
+
+
+function updateHost(currentFiber) {
+    if(!currentFiber.stateNode) {
+        currentFiber.stateNode = createDOM(currentFiber);
+    }
+    const newChildren = currentFiber.props.children;
+    reconcileChildren(currentFiber,newChildren);
 }
 
 function beginWork(currentFiber) {
@@ -72,6 +93,8 @@ function beginWork(currentFiber) {
         updateHostRoot(currentFiber);
     }else if(currentFiber.tag === TAG_TEXT) {
         updateHostText(currentFiber);
+    }else if(currentFiber.tag === TAG_HOST) {
+        updateHost(currentFiber)
     }
 }
 
