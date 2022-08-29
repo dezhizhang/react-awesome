@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-29 06:50:30
  * :last editor: 张德志
- * :date last edited: 2022-08-30 05:51:06
+ * :date last edited: 2022-08-30 06:14:57
  */
 
 import { ELEMENT_TEXT, TAG_HOST, TAG_ROOT, TAG_TEXT,PLACEMENT } from "./constants";
@@ -37,6 +37,16 @@ requestIdleCallback(workLoop,{ timeout:500 });
 function completeUnitOfWork(currentFiber) {
   let returnFiber = currentFiber.return;
   if(returnFiber) {
+    if(!returnFiber.firstEffect) {
+        returnFiber.firstEffect = currentFiber.firstEffect;
+    }
+    if(returnFiber.lastEffect) {
+        if(returnFiber.lastEffect) {
+            returnFiber.lastEffect.nextEffect = currentFiber.firstEffect;
+        }else {
+            returnFiber.lastEffect = currentFiber.lastEffect;
+        }
+    }
     const effectTag = currentFiber.effectTag;
     if(effectTag) {
         if(returnFiber.lastEffect) {
