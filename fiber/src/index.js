@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-28 10:22:21
  * :last editor: 张德志
- * :date last edited: 2022-08-29 06:45:53
+ * :date last edited: 2022-08-30 06:38:51
  */
 import React from './react';
 import ReactDOM from './react-dom';
@@ -25,5 +25,3 @@ const element = (
 
 
 ReactDOM.render(element,document.getElementById('root'))
-
-console.log(element);

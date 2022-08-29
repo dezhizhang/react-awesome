@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-29 06:50:30
  * :last editor: 张德志
- * :date last edited: 2022-08-30 06:23:43
+ * :date last edited: 2022-08-30 06:40:23
  */
 
 import { ELEMENT_TEXT, TAG_HOST, TAG_ROOT, TAG_TEXT,PLACEMENT } from "./constants";
@@ -33,6 +33,7 @@ function commitRoot() {
     let currentFiber =  workInProgressRoot.firstEffect;
     while(currentFiber) {
         commitWork(currentFiber);
+        console.log('commitWork',currentFiber);
         currentFiber = currentFiber.nextEffect;
     }
 
@@ -46,7 +47,8 @@ function workLoop(deadline) {
         nextUnitOfWork = performUnitofWork(nextUnitOfWork);
         shouldYield = deadline.timeRemaining() < 1;
     }
-    if(!nextUnitOfWork) {
+    if(!nextUnitOfWork && workInProgressRoot) {
+       
        commitRoot();
     }
     requestIdleCallback(workLoop,{ timeout:500 });
@@ -135,9 +137,10 @@ function updateHostText(currentFiber) {
 }
 
 function updateHostRoot(currentFiber) {
-    console.log('currentFiber',currentFiber);
-    let newChildren =  currentFiber.props.children;
-    reconcileChildren(currentFiber,newChildren);
+    if(currentFiber.props && currentFiber.props.children) {
+        let newChildren =  currentFiber.props.children;
+        reconcileChildren(currentFiber,newChildren);
+    }
 }
 
 function reconcileChildren(currentFiber,newChildren) {
