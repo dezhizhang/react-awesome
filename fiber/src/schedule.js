@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-29 06:50:30
  * :last editor: 张德志
- * :date last edited: 2022-08-30 06:40:23
+ * :date last edited: 2022-08-31 06:14:29
  */
 
 import { ELEMENT_TEXT, TAG_HOST, TAG_ROOT, TAG_TEXT,PLACEMENT } from "./constants";
@@ -26,13 +26,14 @@ function commitWork(currentFiber) {
     if(currentFiber.effectTag === PLACEMENT) {
         returnDOM.appendChild(currentFiber.stateNode);
     }
-    returnFiber.effectTag = null;
+    currentFiber.effectTag = null;
 }
 
 function commitRoot() {
     let currentFiber =  workInProgressRoot.firstEffect;
     while(currentFiber) {
         commitWork(currentFiber);
+        
         console.log('commitWork',currentFiber);
         currentFiber = currentFiber.nextEffect;
     }
@@ -62,12 +63,11 @@ function completeUnitOfWork(currentFiber) {
     if(!returnFiber.firstEffect) {
         returnFiber.firstEffect = currentFiber.firstEffect;
     }
-    if(returnFiber.lastEffect) {
-        if(returnFiber.lastEffect) {
+    if(!!returnFiber.lastEffect) {
+        if(!!returnFiber.lastEffect) {
             returnFiber.lastEffect.nextEffect = currentFiber.firstEffect;
-        }else {
-            returnFiber.lastEffect = currentFiber.lastEffect;
         }
+        returnFiber.lastEffect = currentFiber.lastEffect;
     }
     const effectTag = currentFiber.effectTag;
     if(effectTag) {

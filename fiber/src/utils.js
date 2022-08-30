@@ -5,15 +5,12 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-30 05:18:30
  * :last editor: 张德志
- * :date last edited: 2022-08-30 05:25:13
+ * :date last edited: 2022-08-31 06:18:54
  */
 export function setProps(dom,oldProps,newProps) {
-    for(let key in oldProps) {
-        
-    }
-
+    
     for(let key in newProps) {
-        if(key === 'children') {
+        if(key !== 'children') {
             setProp(dom,key,newProps[key]);
         }
     }
