@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-29 06:50:30
  * :last editor: 张德志
- * :date last edited: 2022-08-31 06:14:29
+ * :date last edited: 2022-08-31 06:33:45
  */
 
 import { ELEMENT_TEXT, TAG_HOST, TAG_ROOT, TAG_TEXT,PLACEMENT } from "./constants";
@@ -33,8 +33,6 @@ function commitRoot() {
     let currentFiber =  workInProgressRoot.firstEffect;
     while(currentFiber) {
         commitWork(currentFiber);
-        
-        console.log('commitWork',currentFiber);
         currentFiber = currentFiber.nextEffect;
     }
 
@@ -111,7 +109,6 @@ function createDOM(currentFiber) {
 }
 
 
-
 function updateHost(currentFiber) {
     if(!currentFiber.stateNode) {
         currentFiber.stateNode = createDOM(currentFiber);
@@ -149,6 +146,7 @@ function reconcileChildren(currentFiber,newChildren) {
     while(newChildrenIndex < newChildren.length) {
         let newChild = newChildren[newChildrenIndex];
         let tag;
+        debugger;
         if(newChild.type === ELEMENT_TEXT) {
             tag = TAG_TEXT;
         }else if(typeof newChild.type === 'string') {
@@ -163,7 +161,7 @@ function reconcileChildren(currentFiber,newChildren) {
             effectTag:PLACEMENT,
             nextEffect:null,
         }
-        if(newChild) {
+        if(newFiber) {
             if(newChildrenIndex ===0) {
                 currentFiber.child = newFiber;
             }else {
