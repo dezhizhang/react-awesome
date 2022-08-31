@@ -5,18 +5,22 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-08-29 06:50:30
  * :last editor: 张德志
- * :date last edited: 2022-08-31 06:33:45
+ * :date last edited: 2022-09-01 06:04:28
  */
 
 import { ELEMENT_TEXT, TAG_HOST, TAG_ROOT, TAG_TEXT,PLACEMENT } from "./constants";
 import { setProps } from './utils';
 let nextUnitOfWork = null;
 let workInProgressRoot = null;
-
+let currentFiber = null;
 export function scheduleRoot(rootFiber) {
-    nextUnitOfWork = rootFiber;
-    workInProgressRoot = rootFiber;
-
+    if(currentFiber) {
+        rootFiber.alternate = currentFiber;
+        workInProgressRoot = rootFiber;
+    }else {
+        workInProgressRoot = rootFiber;    
+    }
+    nextUnitOfWork = workInProgressRoot;
 } 
 
 function commitWork(currentFiber) {
@@ -146,7 +150,6 @@ function reconcileChildren(currentFiber,newChildren) {
     while(newChildrenIndex < newChildren.length) {
         let newChild = newChildren[newChildrenIndex];
         let tag;
-        debugger;
         if(newChild.type === ELEMENT_TEXT) {
             tag = TAG_TEXT;
         }else if(typeof newChild.type === 'string') {
