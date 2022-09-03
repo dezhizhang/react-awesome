@@ -5,11 +5,12 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 05:16:45
  * :last editor: 张德志
- * :date last edited: 2022-09-04 05:34:01
+ * :date last edited: 2022-09-04 06:41:18
  */
-
+import { listenToAllSupportedEvents } from './DOMPluginEventSystem';
 
 function render(vdom,container) {
+    listenToAllSupportedEvents(container);
     mount(vdom,container);
 }
 

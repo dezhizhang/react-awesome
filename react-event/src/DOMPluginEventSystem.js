@@ -5,10 +5,10 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 05:41:27
  * :last editor: 张德志
- * :date last edited: 2022-09-04 05:43:06
+ * :date last edited: 2022-09-04 06:41:38
  */
 
 
-function listenToAllSupportedEvents() {
+export function listenToAllSupportedEvents() {
     
 }
