@@ -5,8 +5,10 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 06:16:10
  * :last editor: 张德志
- * :date last edited: 2022-09-04 06:31:27
+ * :date last edited: 2022-09-04 06:47:34
  */
+
+import { registerTwoPhaseEvent } from './EventRegistry';
 
 const discreateEventPairsForSimpleEventPlugin = [
     'click','click',
@@ -16,12 +18,9 @@ const discreateEventPairsForSimpleEventPlugin = [
 export const topLevelEventsToReactNames = new Map();
 
 
-function registerTwoPhaseEvent() {
-    
-}
 
 export function registerSimpleEvents() {
-    for(let i=0;i < discreateEventPairsForSimpleEventPlugin.length;i++) {
+    for(let i=0;i < discreateEventPairsForSimpleEventPlugin.length;i+=2) {
         const topEvent = discreateEventPairsForSimpleEventPlugin[i];
         const event = discreateEventPairsForSimpleEventPlugin[i + 1];
         const capitalizedEvent = event[0].toUpperCase() + event.slice(1);
