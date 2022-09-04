@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 05:41:27
  * :last editor: 张德志
- * :date last edited: 2022-09-04 11:20:46
+ * :date last edited: 2022-09-04 11:23:42
  */
 
 import { allNativeEvents } from "./EventRegistry";
@@ -41,13 +41,13 @@ function listenToNativeEvent(domEventName,isCapturePhaseListener,rootContainerEl
             eventSystemFlags,
             isCapturePhaseListener,
         )
-        listenerSet.add(listenerSetKey)
+        listenerSet.add(listenerSetKey)    
     }
 }
 
 function addTrappedEventListener(rootContainerElement,domEventName,eventSystemFlags,isCapturePhaseListener) {
     let listener = dispatchEvent.bind(null,domEventName,eventSystemFlags,rootContainerElement);
-    
+
     if(isCapturePhaseListener) {
         addEventCaptureListener(rootContainerElement,domEventName,listener);
     }else {
