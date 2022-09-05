@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 05:41:27
  * :last editor: 张德志
- * :date last edited: 2022-09-06 06:28:21
+ * :date last edited: 2022-09-06 06:56:33
  */
 
 import { allNativeEvents } from "./EventRegistry";
@@ -14,6 +14,8 @@ import { getEventListerSet } from './ReactDOMComponentTree';
 import { IS_CAPTURE_PHASE } from './EventSystemFlags';
 import { dispatchEvent } from './ReactDOMEventListener';
 import { addEventBubbleListener, addEventCaptureListener } from "./EventListener";
+import { HostComponent } from "./ReactWorkTags";
+import getListener from './getListener';
 
 SimpleEventPlugin.registerEvents();
 
@@ -65,6 +67,31 @@ export function dispatchEventForPluginEventSystem(domEventName,eventSystemFlags,
 }
 
 
-export function accumulateSinglePhaseListeners() {
-    
+
+export function accumulateSinglePhaseListeners(targetFiber,reactName,nativeType,isCapturePhase) {
+    let captureName = reactName + 'Capture';
+    let reactEventName = isCapturePhase ? captureName:reactName;
+    let listeners = [];
+    let instance = targetFiber;
+    let lastHostComponent = null;
+    while(instance) {
+        const { stateNode, tag } = instance;
+        if(tag === HostComponent && stateNode !== null) {
+            lastHostComponent = stateNode;
+            let listener = getListener(instance,reactEventName);
+            if(listener) {
+                listeners.push(createDispatchListener(instance,listener,lastHostComponent));
+                
+            }
+        }
+        instance = instance.return;
+    }
+
+    return listeners;
+      
+}
+
+
+function createDispatchListener(instance,listener,currentTarget) {
+    return { instance,listener,currentTarget }
 }
