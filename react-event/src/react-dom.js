@@ -5,10 +5,10 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 05:16:45
  * :last editor: 张德志
- * :date last edited: 2022-09-04 06:41:18
+ * :date last edited: 2022-09-06 04:54:48
  */
 import { listenToAllSupportedEvents } from './DOMPluginEventSystem';
-
+import { HostComponent } from './ReactWorkTags';
 function render(vdom,container) {
     listenToAllSupportedEvents(container);
     mount(vdom,container);
