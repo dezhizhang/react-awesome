@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 05:41:27
  * :last editor: 张德志
- * :date last edited: 2022-09-04 11:23:42
+ * :date last edited: 2022-09-06 05:23:26
  */
 
 import { allNativeEvents } from "./EventRegistry";
@@ -57,4 +57,9 @@ function addTrappedEventListener(rootContainerElement,domEventName,eventSystemFl
 
 function getEventListerSetKey(domEventName,isCapturePhaseListener) {
     return `${domEventName}__${isCapturePhaseListener ? 'capture':'bubble'}`
+}
+
+export function dispatchEventForPluginEventSystem(domEventName,eventSystemFlags,nativeEvent,targetInst,targetContainer) {
+    
+    
 }
