@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 05:41:27
  * :last editor: 张德志
- * :date last edited: 2022-09-06 05:23:26
+ * :date last edited: 2022-09-06 06:28:21
  */
 
 import { allNativeEvents } from "./EventRegistry";
@@ -61,5 +61,10 @@ function getEventListerSetKey(domEventName,isCapturePhaseListener) {
 
 export function dispatchEventForPluginEventSystem(domEventName,eventSystemFlags,nativeEvent,targetInst,targetContainer) {
     
+    
+}
+
+
+export function accumulateSinglePhaseListeners() {
     
 }

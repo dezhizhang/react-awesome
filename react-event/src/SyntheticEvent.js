@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-06 05:53:45
  * :last editor: 张德志
- * :date last edited: 2022-09-06 06:16:07
+ * :date last edited: 2022-09-06 06:17:17
  */
 
 
@@ -69,5 +69,7 @@ const MouseEventInterface = {
 }
 
 export const SyntheticMouseEvent = createSyntheticEvent(MouseEventInterface);
+export const SyntheticEvent = createSyntheticEvent({});
+
  
 
