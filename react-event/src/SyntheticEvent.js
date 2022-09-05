@@ -5,8 +5,17 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-06 05:53:45
  * :last editor: 张德志
- * :date last edited: 2022-09-06 05:59:15
+ * :date last edited: 2022-09-06 06:16:07
  */
+
+
+function functionThatReturnsTrue() {
+    return true;
+}
+
+function functionThatReturnsFalse() {
+    return false;
+}
 
 
 export function createSyntheticEvent(Interface) {
@@ -16,7 +25,49 @@ export function createSyntheticEvent(Interface) {
         this.type = reactEventType;
         this.target = nativeEventTarget;
         this.currentTarget = null;
+        
+        for(const propName in Interface) {
+            this[propName] = nativeEvent[propName];
+        }
+
+        this.isDefaultPrevented = functionThatReturnsFalse;
+        this.isPropagationPrevented = functionThatReturnsFalse;
+
     }
+
+    Object.assign(SyntheticBaseEvent.prototype,{
+        preventDefault() {
+            this.isDefaultPrevented = true;
+            const event = this.nativeEvent;
+            if(event.preventDefault) {
+                event.preventDefault();
+            }else {
+                event.returnValue = false;
+            }
+            this.isDefaultPrevented = functionThatReturnsTrue;
+        },
+        stopPropagation() {
+            const event = this.nativeEvent;
+            if(event.stopPropagation) {
+                event.stopPropagation();
+            }else {
+                event.cancelBubble = true;
+            }
+            this.isPropagationPrevented = functionThatReturnsTrue;
+        }
+        
+        
+    })
     return SyntheticBaseEvent;
     
 }
+
+
+const MouseEventInterface = {
+    clientX:0,
+    clientY:0
+}
+
+export const SyntheticMouseEvent = createSyntheticEvent(MouseEventInterface);
+ 
+
