@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-06 05:53:45
  * :last editor: 张德志
- * :date last edited: 2022-09-06 06:17:17
+ * :date last edited: 2022-09-13 04:54:32
  */
 
 
@@ -31,7 +31,7 @@ export function createSyntheticEvent(Interface) {
         }
 
         this.isDefaultPrevented = functionThatReturnsFalse;
-        this.isPropagationPrevented = functionThatReturnsFalse;
+        this.isPropagationStoppend = functionThatReturnsFalse;
 
     }
 
@@ -53,9 +53,8 @@ export function createSyntheticEvent(Interface) {
             }else {
                 event.cancelBubble = true;
             }
-            this.isPropagationPrevented = functionThatReturnsTrue;
+            this.isPropagationStoppend = functionThatReturnsTrue;
         }
-        
         
     })
     return SyntheticBaseEvent;

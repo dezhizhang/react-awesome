@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 05:41:27
  * :last editor: 张德志
- * :date last edited: 2022-09-06 06:56:33
+ * :date last edited: 2022-09-13 04:53:47
  */
 
 import { allNativeEvents } from "./EventRegistry";
@@ -60,6 +60,44 @@ function addTrappedEventListener(rootContainerElement,domEventName,eventSystemFl
 function getEventListerSetKey(domEventName,isCapturePhaseListener) {
     return `${domEventName}__${isCapturePhaseListener ? 'capture':'bubble'}`
 }
+
+function execDispatch(event,listener,currentTarget) {
+    event.currentTarget = currentTarget;
+    listener(event);
+    event.currentTarget = null;
+
+}
+
+function processDispatchQueueItemsInOrder(event,listeners,isCapturePhase) {
+    if(isCapturePhase) {
+        for(let i=listeners.length-1;i >=0;i--) {
+            const { currentTarget,listener } = listeners[i];
+            if(event.isPropagationStoppend()) {
+                return;
+            }
+            execDispatch(event,listener,currentTarget);
+        }
+    }else {
+        for(let i=0;i < 0;i++) {
+            const { currentTarget,listener } = listeners[i];
+            if(event.isPropagationStoppend()) {
+                return;
+            }
+            execDispatch(event,listener,currentTarget);
+        }  
+    }
+}
+
+function processDispatchQueue(dispatchQueue,eventSystemFlags) {
+    let isCapturePhase = eventSystemFlags & IS_CAPTURE_PHASE !== 0;
+    for(let i=0;i < dispatchQueue.length;i++) {
+        const { event,listeners } = dispatchQueue[i];
+   
+        processDispatchQueueItemsInOrder(event,listeners,isCapturePhase);
+    }
+}
+
+
 
 export function dispatchEventForPluginEventSystem(domEventName,eventSystemFlags,nativeEvent,targetInst,targetContainer) {
     

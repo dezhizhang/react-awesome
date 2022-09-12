@@ -5,13 +5,13 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 11:15:49
  * :last editor: 张德志
- * :date last edited: 2022-09-06 05:49:50
+ * :date last edited: 2022-09-13 04:37:20
  */
 
 
 import { getClosestInstanceFromNode, getFiberCurrentPropsFormNode } from "./ReactDOMComponentTree";
 import { dispatchEventForPluginEventSystem } from './DOMPluginEventSystem';
-import {SimpleEventPlugin} from './SimpleEventPlugin'
+import * as SimpleEventPlugin from './SimpleEventPlugin';
 
 export function dispatchEvent(domEventName,eventSystemFlags,targetContainer,nativeEvent) {
     let nativeEventTarget = nativeEvent.target || nativeEvent.srcElement || window;

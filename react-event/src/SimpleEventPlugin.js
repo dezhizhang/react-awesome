@@ -5,13 +5,13 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-04 06:15:27
  * :last editor: 张德志
- * :date last edited: 2022-09-06 06:27:51
+ * :date last edited: 2022-09-13 04:28:58
  */
 
 
 import { registerSimpleEvents, topLevelEventsToReactNames } from './DOMEventProperties';
 import { IS_CAPTURE_PHASE } from './EventSystemFlags';
-import { SyntheticEvent,SyntheticMouseEvent } from './SyntheticEvent';
+import { SyntheticMouseEvent } from './SyntheticEvent';
 import { accumulateSinglePhaseListeners } from './DOMPluginEventSystem';
 
 function extractEvents(

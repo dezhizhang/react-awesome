@@ -5,15 +5,15 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-03 05:53:20
  * :last editor: 张德志
- * :date last edited: 2022-09-04 05:32:43
+ * :date last edited: 2022-09-13 04:56:01
  */
 import React from './react';
 import ReactDOM from './react-dom';
 
 let element = (
-  <div>
-    <div>hello</div>
-  </div>
+  <button>按钮</button>
 )
+
+
 
 ReactDOM.render(element,document.getElementById('root'))
