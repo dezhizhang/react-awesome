@@ -5,11 +5,14 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-13 06:21:53
  * :last editor: 张德志
- * :date last edited: 2022-09-13 06:21:53
+ * :date last edited: 2022-09-18 11:17:41
  */
 
-function render() {
-
+import { createFiberRoot } from './ReactFiberRoot';
+import { updateContainer } from './ReactFiberReconciler';
+function render(element,container) {
+    const fiberRoot = createFiberRoot(container);
+    updateContainer(element,fiberRoot);
 }
 
 const ReactDOM = {

@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-13 06:28:05
  * :last editor: 张德志
- * :date last edited: 2022-09-13 06:45:05
+ * :date last edited: 2022-09-18 10:33:34
  */
 import { createHostRootFiber } from './ReactFilber';
 import { inititalizeUpdateQueue } from './ReactUpdateQueue'
@@ -17,5 +17,4 @@ export function createFiberRoot(containerInfo) {
     hostRootFiber.stateNode = fiberRoot;
     inititalizeUpdateQueue(hostRootFiber);
     return fiberRoot;
-    
 }
