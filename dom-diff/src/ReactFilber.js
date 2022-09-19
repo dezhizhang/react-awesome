@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-13 06:28:28
  * :last editor: 张德志
- * :date last edited: 2022-09-20 06:26:22
+ * :date last edited: 2022-09-20 06:51:37
  */
 import { HostRoot } from './ReactWorkTags';
 import { NoFlags } from './ReactFlags';
@@ -27,7 +27,7 @@ export function createHostRootFiber() {
 
 export function createWorkInProgress(current,pendingProps) {
     let workInProgress = current.alternate;
-    if(workInProgress) {
+    if(!workInProgress) {
         workInProgress = createFiber(current.tag,pendingProps,current.key);
         workInProgress.type = current.type;
         workInProgress.stateNode = current.stateNode;

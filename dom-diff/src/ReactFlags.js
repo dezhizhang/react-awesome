@@ -5,5 +5,8 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-20 06:25:40
  * :last editor: 张德志
- * :date last edited: 2022-09-20 06:25:40
+ * :date last edited: 2022-09-20 06:54:05
  */
+
+
+export const NoFlags = 0b0000000001
