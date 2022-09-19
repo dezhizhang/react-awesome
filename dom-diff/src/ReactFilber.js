@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-13 06:28:28
  * :last editor: 张德志
- * :date last edited: 2022-09-13 06:36:27
+ * :date last edited: 2022-09-20 06:12:55
  */
 import { HostRoot } from './ReactWorkTags';
 
@@ -22,4 +22,8 @@ function createFiber(tag,pendingProps,key) {
 
 export function createHostRootFiber() {
     return createFiber(HostRoot);
+}
+
+export function createWorkInProgress() {
+    
 }

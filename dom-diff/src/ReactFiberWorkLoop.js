@@ -5,8 +5,16 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-18 11:18:00
  * :last editor: 张德志
- * :date last edited: 2022-09-18 11:25:35
+ * :date last edited: 2022-09-20 06:12:57
  */
+
+import { createWorkInProgress } from './ReactFilber';
+
+let workInProgressRoot = null;
+let workInProgress = null;
+
+
+
 
 
 export function scheduleUpdateOnFiber(fiber) {
@@ -16,6 +24,9 @@ export function scheduleUpdateOnFiber(fiber) {
 
 
 function performSyncWorkOnRoot(fiberRoot) {
+    workInProgressRoot = fiberRoot;
+    workInProgress = createWorkInProgress(workInProgressRoot.current);
+
     console.log('fiberRoot',fiberRoot)
 }
 
