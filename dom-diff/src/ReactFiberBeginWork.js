@@ -1,18 +1,30 @@
 /*
  * :file description: 
- * :name: /dom-diff/src/ReactFiberBeginWork.JS
+ * :name: /dom-diff/src/ReactFiberBeginWork.js
  * :author: 张德志
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-20 07:07:33
  * :last editor: 张德志
- * :date last edited: 2022-09-20 07:28:00
+ * :date last edited: 2022-09-21 07:31:39
  */
 
 import { HostRoot,HostComponent } from './ReactWorkTags';
+import { shouldSetTextContent } from './ReactDOMHostConfig';
 
-
-function reconcileChildren() {
-    
+function reconcileChildren(current,workInProgress,nextChildren) {
+    if(current) {
+        workInProgress.child = reconcileChildFibers(
+            workInProgress,
+            current && current.child,
+            nextChildren
+        )
+    }else {
+        workInProgress.child = mountChildFibers(
+            workInProgress,
+            current && current.child,
+            nextChildren
+        ) 
+    }
 }
 
 function updateHostRoot(current,workInProgress) {
@@ -30,20 +42,14 @@ function mountChildFibers() {
     
 }
 
-function updateHostComponent(current,workInProgress,nextChildren) {
-    if(current) {
-        workInProgress.child = reconcileChildFibers(
-            workInProgress,
-            current && current.child,
-            nextChildren
-        )
-    }else {
-        workInProgress.child = mountChildFibers(
-            workInProgress,
-            current && current.child,
-            nextChildren
-        ) 
-    }
+function updateHostComponent(current,workInProgress) {
+    const type = workInProgress.type;
+    const nextProps = workInProgress.pendingProps;
+
+    let nextChildren = nextProps.children;
+
+    reconcileChildren(current,workInProgress,nextChildren);
+    return workInProgress.child;
 }
 
 export function beginWork(current,workInProgress) {
