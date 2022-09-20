@@ -5,9 +5,9 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-13 06:28:28
  * :last editor: 张德志
- * :date last edited: 2022-09-20 06:51:37
+ * :date last edited: 2022-09-21 06:51:20
  */
-import { HostRoot } from './ReactWorkTags';
+import { HostComponent, HostRoot } from './ReactWorkTags';
 import { NoFlags } from './ReactFlags';
 
 function FiberNode(tag,pendingProps,key) {
@@ -41,4 +41,17 @@ export function createWorkInProgress(current,pendingProps) {
     workInProgress.sibling = null;
     workInProgress.updateQueue = current.updateQueue;
     workInProgress.firstEffect = workInProgress.lastEffect = workInProgress.nextEffect = null;
+    return workInProgress;
+}
+
+export function createFiberFromElement(element) {
+    const { key,type,props } = element;
+    let tag;
+    if(typeof type === 'string') {
+        tag = HostComponent;
+    }
+    const fiber = createFiber(tag,props,key);
+    fiber.type = type;
+    return fiber;
+    
 }
