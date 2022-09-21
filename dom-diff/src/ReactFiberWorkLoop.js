@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-18 11:18:00
  * :last editor: 张德志
- * :date last edited: 2022-09-22 06:15:27
+ * :date last edited: 2022-09-22 07:32:33
  */
 
 import { createWorkInProgress } from './ReactFilber';
@@ -44,8 +44,25 @@ function completeUnitOfWork(unitOfWork) {
         const current = unitOfWork.alternate;
         const returnFiber = unitOfWork.return;
         completeWork(current,completeWork);
+        collectEffectList(returnFiber,unitOfWork);
+
+        const siblingFiber = completeWork.sibling;
+        if(siblingFiber) {
+            workInProgress = siblingFiber;
+            return;
+        }
+        completeWork = returnFiber;
+        workInProgress = unitOfWork;
         
     } while(unitOfWork)
+}
+
+
+function collectEffectList(returnFiber,completedWork) {
+    if(!returnFiber.firstEffect) {
+        returnFiber.firstEffect = completedWork.firstEffect;
+    }
+    
 }
 
 function performUnitOfWork(unitOfWork) {
