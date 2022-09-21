@@ -5,7 +5,7 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-18 11:18:00
  * :last editor: 张德志
- * :date last edited: 2022-09-22 07:32:33
+ * :date last edited: 2022-09-22 07:43:49
  */
 
 import { createWorkInProgress } from './ReactFilber';
@@ -13,9 +13,6 @@ import { beginWork } from './ReactFiberBeginWork';
 import { completeWork } from './ReactFiberCompleteWork'
 let workInProgressRoot = null;
 let workInProgress = null;
-
-
-
 
 
 export function scheduleUpdateOnFiber(fiber) {
@@ -28,7 +25,24 @@ function performSyncWorkOnRoot(fiberRoot) {
     workInProgressRoot = fiberRoot;
     workInProgress = createWorkInProgress(workInProgressRoot.current);
     workLoopSync();
-    console.log('fiberRoot',fiberRoot)
+    commitRoot();
+}
+
+function commitRoot() {
+    const finishedWork = workInProgressRoot.current.alternate;
+    workInProgressRoot.finishedWork = finishedWork;
+    commitMutationEffetcs(workInProgressRoot);
+}
+
+
+function commitMutationEffetcs(root) {
+    const finishedWork = root.finishedWork;
+    const nextEffect = finishedWork.firstEffect;
+    const effectsList = '';
+    while(nextEffect) {
+
+    }
+    
 }
 
 function workLoopSync() {
