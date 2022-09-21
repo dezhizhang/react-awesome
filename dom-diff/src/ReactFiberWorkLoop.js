@@ -5,12 +5,12 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-18 11:18:00
  * :last editor: 张德志
- * :date last edited: 2022-09-20 07:08:36
+ * :date last edited: 2022-09-22 06:15:27
  */
 
 import { createWorkInProgress } from './ReactFilber';
 import { beginWork } from './ReactFiberBeginWork';
-
+import { completeWork } from './ReactFiberCompleteWork'
 let workInProgressRoot = null;
 let workInProgress = null;
 
@@ -38,8 +38,14 @@ function workLoopSync() {
 }
 
 
-function completeUnitOfWork() {
-    
+function completeUnitOfWork(unitOfWork) {
+    // let completeWork = unitOfWork;
+    do {
+        const current = unitOfWork.alternate;
+        const returnFiber = unitOfWork.return;
+        completeWork(current,completeWork);
+        
+    } while(unitOfWork)
 }
 
 function performUnitOfWork(unitOfWork) {
