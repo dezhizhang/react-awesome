@@ -17,3 +17,23 @@ const readline = require('readline-sync');
 })()
 
 ```
+### 任务队列
+```js
+const { messageQueue } = require('./messageQueue');
+
+(function mainThread() {
+    setInterval(() => {
+        let task = messageQueue.get();
+        task && task();
+    },1000)
+})();
+
+(function ioThread() {
+    let count = 1;
+    setInterval(() => {
+        messageQueue.put(() => {
+            console.log('task' + count++)
+        })
+    },1000)
+})()
+```
