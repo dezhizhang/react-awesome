@@ -37,3 +37,36 @@ const { messageQueue } = require('./messageQueue');
     },1000)
 })()
 ```
+### 
+```js
+const url = require('url');
+const http = require('http');
+
+process.on('message',(message) => {
+    const { type,options } = message;
+    if(type === 'send') {
+        const urlObj = url.parse(options.url);
+        const config = {
+            hostname:urlObj.hostname,
+            port:urlObj.port,
+            path:urlObj.path,
+            method:urlObj.method,
+        }
+
+        const req = http.request(config,(res) => {
+            let chunks = [];
+            res.on('data',(data) => {
+                chunks.push(data);
+            });
+            res.on('end',() => {
+                process.send({
+                    type:'response',
+                    data:JSON.parse(Buffer.concat(chunks).toString())
+                })
+            })
+        });
+        req.end();
+        
+    }
+})
+```
