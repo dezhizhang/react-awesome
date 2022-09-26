@@ -5,18 +5,28 @@
  * :copyright: (c) 2022, Tungee
  * :date created: 2022-09-27 05:53:20
  * :last editor: 张德志
- * :date last edited: 2022-09-27 06:21:19
+ * :date last edited: 2022-09-27 06:40:04
  */
 
+
+let taskQueue = [];
 let taskIdCounter = 0;
 
 let maxSinged318BitInt = 1073741823;
 
 
-function scheduleCallback(priorityLevel,callback) {
+function scheduleCallback(priorityLevel,callback,options) {
     let currentTime = getCurrentTime();
-    let startTime = currentTime;
+    // let startTime = currentTime;
     let timeout;
+    if(typeof options === 'object' && options !== null) {
+        let delay = options.delay;
+        if(typeof delay === 'number' && delay > 0) {
+            startTime = currentTime + delay;
+        }else {
+            startTime = currentTime;
+        }
+    }
     switch(priorityLevel) {
         case 
     }
@@ -34,12 +44,12 @@ function scheduleCallback(priorityLevel,callback) {
     requestHostCallback(flushWork)
 }
 
-function flushWork() {
-    return workLoop();
+function flushWork(currentTime) {
+    return workLoop(currentTime);
 }
 
 
-function workLoop() {
+function workLoop(currentTime) {
     currentTask = peek(taskQueue);
     while(currentTask) {
         if(currentTask.expirationTime > currentTime &&  shouldYield()) {
@@ -58,6 +68,7 @@ function workLoop() {
         }else {
             pop(taskQueue);
         }
+        currentTask = peek(taskQueue);
     }
     return currentTask;
     
